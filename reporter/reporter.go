@@ -2,6 +2,7 @@ package reporter
 
 import (
 	"fmt"
+
 	"github.com/ax-0m/apidiff/types"
 )
 
@@ -27,7 +28,26 @@ func Report(changes []types.Change) {
 		case types.Modified:
 			fmt.Printf("%s~  %s: changed  %v → %v%s\n", colorYellow, change.Path, change.OldValue, change.NewValue, colorReset)
 		case types.TypeChanged:
-			fmt.Printf("%s⚠  %s: type changed  %T → %T%s\n", colorYellow, change.Path, change.OldValue, change.NewValue, colorReset)
+			fmt.Printf("%s⚠  %s: type changed  %s → %s%s\n", colorYellow, change.Path, friendlyType(change.OldValue), friendlyType(change.NewValue), colorReset)
 		}
+	}
+}
+
+func friendlyType(v interface{}) string {
+	switch v.(type) {
+	case float64:
+		return "number"
+	case string:
+		return "string"
+	case bool:
+		return "boolean"
+	case map[string]interface{}:
+		return "object"
+	case []interface{}:
+		return "array"
+	case nil:
+		return "null"
+	default:
+		return "unknown"
 	}
 }
