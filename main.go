@@ -10,15 +10,13 @@ import (
 )
 
 func main() {
-	if len(os.Args) < 3 { // os.args is an array
+	if len(os.Args) < 3 {
 		fmt.Println("Usage: apidiff old.json new.json")
 		os.Exit(1)
 	}
+
 	oldFile := os.Args[1]
 	newFile := os.Args[2]
-
-	fmt.Println("Old:", oldFile)
-	fmt.Println("New:", newFile)
 
 	oldJSON, err := parser.ParseFile(oldFile)
 	if err != nil {
@@ -33,14 +31,5 @@ func main() {
 	}
 
 	changes := diff.Compare(oldJSON, newJSON, "")
-	reportChanges := make([]reporter.Change, len(changes))
-	for i, c := range changes {
-		reportChanges[i] = reporter.Change{
-			Path:     c.Path,
-			Type:     string(c.Type),
-			OldValue: c.OldValue,
-			NewValue: c.NewValue,
-		}
-	}
-	reporter.Report(reportChanges)
+	reporter.Report(changes)
 }

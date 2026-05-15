@@ -1,6 +1,9 @@
 package reporter
 
-import "fmt"
+import (
+	"fmt"
+	"github.com/ax-0m/apidiff/types"
+)
 
 const (
 	colorReset  = "\033[0m"
@@ -9,14 +12,7 @@ const (
 	colorYellow = "\033[33m"
 )
 
-type Change struct {
-	Path     string
-	Type     string
-	OldValue interface{}
-	NewValue interface{}
-}
-
-func Report(changes []Change) {
+func Report(changes []types.Change) {
 	if len(changes) == 0 {
 		fmt.Println("✔  no changes detected")
 		return
@@ -24,13 +20,13 @@ func Report(changes []Change) {
 
 	for _, change := range changes {
 		switch change.Type {
-		case "added":
+		case types.Added:
 			fmt.Printf("%s✚  %s: added (%v)%s\n", colorGreen, change.Path, change.NewValue, colorReset)
-		case "removed":
+		case types.Removed:
 			fmt.Printf("%s✖  %s: removed (was %v)%s\n", colorRed, change.Path, change.OldValue, colorReset)
-		case "modified":
+		case types.Modified:
 			fmt.Printf("%s~  %s: changed  %v → %v%s\n", colorYellow, change.Path, change.OldValue, change.NewValue, colorReset)
-		case "type_changed":
+		case types.TypeChanged:
 			fmt.Printf("%s⚠  %s: type changed  %T → %T%s\n", colorYellow, change.Path, change.OldValue, change.NewValue, colorReset)
 		}
 	}

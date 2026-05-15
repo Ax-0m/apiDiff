@@ -1,34 +1,22 @@
 package diff
 
-import "fmt"
+import (
+	"fmt"
 
-type ChangeType string
-
-const (
-	Added       ChangeType = "added"
-	Removed     ChangeType = "removed"
-	Modified    ChangeType = "modified"
-	TypeChanged ChangeType = "type_changed"
+	"github.com/ax-0m/apidiff/types"
 )
 
-type Change struct {
-	Path     string
-	Type     ChangeType
-	OldValue interface{}
-	NewValue interface{}
-}
-
-func Compare(old, new map[string]interface{}, path string) []Change {
-	var changes []Change
+func Compare(old, new map[string]interface{}, path string) []types.Change {
+	var changes []types.Change
 
 	for key, oldVal := range old {
 		currentPath := buildPath(path, key)
 		newVal, exists := new[key]
 
 		if !exists {
-			changes = append(changes, Change{
+			changes = append(changes, types.Change{
 				Path:     currentPath,
-				Type:     Removed,
+				Type:     types.Removed,
 				OldValue: oldVal,
 			})
 			continue
@@ -42,26 +30,27 @@ func Compare(old, new map[string]interface{}, path string) []Change {
 		_, exists := old[key]
 
 		if !exists {
-			changes = append(changes, Change{
+			changes = append(changes, types.Change{
 				Path:     currentPath,
-				Type:     Added,
+				Type:     types.Added,
 				NewValue: newVal,
 			})
 		}
 	}
+
 	return changes
 }
 
-func compareValues(path string, oldVal, newVal interface{}) []Change {
-	var changes []Change
+func compareValues(path string, oldVal, newVal interface{}) []types.Change {
+	var changes []types.Change
 
 	oldType := fmt.Sprintf("%T", oldVal)
 	newType := fmt.Sprintf("%T", newVal)
 
 	if oldType != newType {
-		return append(changes, Change{
+		return append(changes, types.Change{
 			Path:     path,
-			Type:     TypeChanged,
+			Type:     types.TypeChanged,
 			OldValue: oldVal,
 			NewValue: newVal,
 		})
@@ -75,9 +64,9 @@ func compareValues(path string, oldVal, newVal interface{}) []Change {
 	}
 
 	if oldVal != newVal {
-		changes = append(changes, Change{
+		changes = append(changes, types.Change{
 			Path:     path,
-			Type:     Modified,
+			Type:     types.Modified,
 			OldValue: oldVal,
 			NewValue: newVal,
 		})
