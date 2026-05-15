@@ -2,8 +2,11 @@ package main
 
 import (
 	"fmt"
-	"github.com/ax-0m/apidiff/parser"
 	"os"
+
+	"github.com/ax-0m/apidiff/diff"
+	"github.com/ax-0m/apidiff/parser"
+	"github.com/ax-0m/apidiff/reporter"
 )
 
 func main() {
@@ -29,6 +32,15 @@ func main() {
 		os.Exit(1)
 	}
 
-	fmt.Println("Old JSON:", oldJSON)
-	fmt.Println("New JSON:", newJSON)
+	changes := diff.Compare(oldJSON, newJSON, "")
+	reportChanges := make([]reporter.Change, len(changes))
+	for i, c := range changes {
+		reportChanges[i] = reporter.Change{
+			Path:     c.Path,
+			Type:     string(c.Type),
+			OldValue: c.OldValue,
+			NewValue: c.NewValue,
+		}
+	}
+	reporter.Report(reportChanges)
 }
