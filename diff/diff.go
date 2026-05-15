@@ -3,7 +3,7 @@ package diff
 import (
 	"fmt"
 
-	"github.com/ax-0m/apidiff/types"
+	"github.com/Ax-0m/apiDiff/types"
 )
 
 func Compare(old, new map[string]interface{}, path string) []types.Change {

@@ -4,9 +4,9 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/ax-0m/apidiff/diff"
-	"github.com/ax-0m/apidiff/parser"
-	"github.com/ax-0m/apidiff/reporter"
+	"github.com/Ax-0m/apiDiff/diff"
+	"github.com/Ax-0m/apiDiff/parser"
+	"github.com/Ax-0m/apiDiff/reporter"
 )
 
 func main() {

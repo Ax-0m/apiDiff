@@ -3,7 +3,7 @@ package reporter
 import (
 	"fmt"
 
-	"github.com/ax-0m/apidiff/types"
+	"github.com/Ax-0m/apiDiff/types"
 )
 
 const (
