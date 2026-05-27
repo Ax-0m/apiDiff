@@ -7,9 +7,9 @@ import (
 )
 
 type Config struct {
-	Project   string   `json:project`
-	BaseURL   string   `json:base_url`
-	Endpoints []string `json:endpoints`
+	Project   string   `json:"project"`
+	BaseURL   string   `json:"base_url"`
+	Endpoints []string `json:"endpoints"`
 }
 
 func CreateConfig(projectName string) error {

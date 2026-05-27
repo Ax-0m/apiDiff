@@ -1,0 +1,5 @@
+{
+ "Project": "users-service",
+ "BaseURL": "https://api.example.com",
+ "Endpoints": []
+}
