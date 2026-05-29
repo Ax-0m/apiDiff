@@ -1,5 +1,5 @@
 {
- "Project": "users-service",
- "BaseURL": "https://api.example.com",
- "Endpoints": []
+ "project": "users-service",
+ "base_url": "https://api.example.com",
+ "endpoints": []
 }
