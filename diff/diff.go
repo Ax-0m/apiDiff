@@ -6,12 +6,19 @@ import (
 	"github.com/Ax-0m/apiDiff/types"
 )
 
-func Compare(old, new map[string]interface{}, path string) []types.Change {
+func Compare(old, new interface{}, path string) []types.Change {
 	var changes []types.Change
 
-	for key, oldVal := range old {
+	oldMap, oldIsMap := old.(map[string]interface{})
+	newMap, newIsMap := new.(map[string]interface{})
+
+	if !oldIsMap || !newIsMap {
+		return changes
+	}
+
+	for key, oldVal := range oldMap {
 		currentPath := buildPath(path, key)
-		newVal, exists := new[key]
+		newVal, exists := newMap[key]
 
 		if !exists {
 			changes = append(changes, types.Change{
@@ -25,9 +32,9 @@ func Compare(old, new map[string]interface{}, path string) []types.Change {
 		changes = append(changes, compareValues(currentPath, oldVal, newVal)...)
 	}
 
-	for key, newVal := range new {
+	for key, newVal := range newMap {
 		currentPath := buildPath(path, key)
-		_, exists := old[key]
+		_, exists := oldMap[key]
 
 		if !exists {
 			changes = append(changes, types.Change{

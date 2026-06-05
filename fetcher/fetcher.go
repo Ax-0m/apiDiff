@@ -7,7 +7,7 @@ import (
 	"net/http"
 )
 
-func Fetch(url string) (map[string]interface{}, error) {
+func Fetch(url string) (interface{}, error) {
 	resp, err := http.Get(url)
 	if err != nil {
 		return nil, fmt.Errorf("could not fetch url %s: %w", url, err)
@@ -23,7 +23,7 @@ func Fetch(url string) (map[string]interface{}, error) {
 		return nil, fmt.Errorf("could not read response body: %w", err)
 	}
 
-	var result map[string]interface{}
+	var result interface{}
 	err = json.Unmarshal(body, &result)
 
 	if err != nil {

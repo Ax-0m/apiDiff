@@ -27,6 +27,20 @@ func main() {
 			os.Exit(1)
 		}
 		cmd.InitProject(os.Args[2])
+
+	case "snapshot":
+		if len(os.Args) < 3 {
+			fmt.Println("Usage: apidiff snapshot <project-name>")
+		}
+		cmd.SnapshotProject(os.Args[2])
+
+	case "compare":
+		if len(os.Args) < 3 {
+			fmt.Println("Usage: apidiff compare <project-name>")
+			os.Exit(1)
+		}
+		cmd.CompareProject(os.Args[2])
+
 	default:
 		if len(os.Args) < 3 {
 			fmt.Println("Usage: apidiff old.json new.json")

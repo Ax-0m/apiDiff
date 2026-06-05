@@ -7,7 +7,7 @@ import (
 	"strings"
 )
 
-func Save(projectName string, endpoint string, data map[string]interface{}) error {
+func Save(projectName string, endpoint string, data interface{}) error {
 	dir := fmt.Sprintf("snapshots/%s", projectName)
 	err := os.MkdirAll(dir, 0755)
 	if err != nil {
@@ -37,7 +37,7 @@ func endpointToFileName(endpoint string) string {
 	return name
 }
 
-func Load(projectName string, endpoint string) (map[string]interface{}, error) {
+func Load(projectName string, endpoint string) (interface{}, error) {
 	filename := endpointToFileName(endpoint)
 	filepath := fmt.Sprintf("snapshots/%s/%s.json", projectName, filename)
 
@@ -47,7 +47,7 @@ func Load(projectName string, endpoint string) (map[string]interface{}, error) {
 		return nil, fmt.Errorf("could not read snapshot file %s: %w", filepath, err)
 	}
 
-	var result map[string]interface{}
+	var result interface{}
 	err = json.Unmarshal(data, &result)
 
 	if err != nil {

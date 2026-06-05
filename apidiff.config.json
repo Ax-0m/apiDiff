@@ -1,5 +1,5 @@
 {
- "project": "users-service",
- "base_url": "https://api.example.com",
- "endpoints": []
+  "project": "users-service",
+  "base_url": "https://jsonplaceholder.typicode.com",
+  "endpoints": ["/users", "/posts"]
 }
