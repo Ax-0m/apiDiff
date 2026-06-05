@@ -1,0 +1,14 @@
+# Binaries
+apidiff
+
+# Snapshots (user generated)
+snapshots/
+
+# Config (user specific)
+apidiff.config.json
+
+# Go
+*.exe
+*.test
+*.out
+go.sum

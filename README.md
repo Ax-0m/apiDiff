@@ -1,6 +1,7 @@
 # apiDiff
 
-A fast, lightweight CLI tool to compare two JSON API responses and detect structural changes.
+A fast, lightweight CLI tool to monitor API structural changes.
+No dashboards. No cloud. Just your terminal.
 
 ## Install
 
@@ -10,52 +11,62 @@ go install github.com/Ax-0m/apiDiff@latest
 
 ## Usage
 
+### Compare two JSON files directly
 ```bash
 apidiff old.json new.json
+```
+
+### Project based workflow
+```bash
+# Initialize a project
+apidiff init users-service
+
+# Edit apidiff.config.json with your base_url and endpoints
+
+# Save snapshots
+apidiff snapshot users-service
+
+# Compare against saved snapshots
+apidiff compare users-service
 ```
 
 ## What it detects
 
 - ✚ Added fields
 - ✖ Removed fields
-- ~ Modified values
+- ~ Modified values  
 - ⚠ Type changes (e.g. number → string)
 
-## Example
+## Example output
+--- diff for /users ---
+⚠  user.id: type changed  number → string
+✚  user.city: added (Bangalore)
+✖  user.address: removed
 
-old.json
-
-```json
-{
-  "user": {
-    "id": 1,
-    "name": "Prakhar"
-  }
-}
-```
-
-new.json
+## Config format
 
 ```json
 {
-  "user": {
-    "id": "usr_001",
-    "name": "Prakhar",
-    "city": "Bangalore"
-  }
+  "project": "users-service",
+  "base_url": "https://api.example.com",
+  "endpoints": [
+    "/users",
+    "/users/profile"
+  ]
 }
 ```
-
-Output:
-⚠ user.id: type changed number → string
-✚ user.city: added (Bangalore)
 
 ## Roadmap
 
-- [ ] Array diffing
-- [ ] Snapshot system — run `apidiff snapshot save` to store a response, then `apidiff snapshot diff` to compare later
-- [ ] OpenAPI support
+### v3 — Smarter Diffing
+- [ ] Array diffing — detect added, removed, reordered elements
+- [ ] Auto endpoint discovery from OpenAPI/Swagger spec URL
+- [ ] Auth header support in config (bearer tokens, API keys)
+- [ ] `apidiff add-endpoint <project> <endpoint>` command
 
-## Built with
-
-Go
+### v4 — Developer Workflow
+- [ ] Scheduled snapshots — auto snapshot every X hours via cron
+- [ ] `apidiff list` — list all projects and their last snapshot time
+- [ ] Diff history — keep last N snapshots and compare across time
+- [ ] GitHub Action — run apidiff compare in CI and fail on breaking changes
+- [ ] Slack/webhook alerts on breaking changes
