@@ -12,3 +12,7 @@ apidiff.config.json
 *.test
 *.out
 go.sum
+
+# Python
+__pycache__/
+*.pyc

@@ -1,5 +1,0 @@
-{
-  "project": "users-service",
-  "base_url": "https://jsonplaceholder.typicode.com",
-  "endpoints": ["/users", "/posts"]
-}

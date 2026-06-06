@@ -8,7 +8,6 @@ import (
 )
 
 func SnapshotProject(projectName string) {
-	fmt.Println("debug: SnapshotProject called with", projectName)
 	cfg, err := config.LoadConfig()
 	if err != nil {
 		fmt.Println("error loading config:", err)

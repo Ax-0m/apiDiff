@@ -13,6 +13,11 @@ type Config struct {
 }
 
 func CreateConfig(projectName string) error {
+	if _, err := os.Stat("apidiff.config.json"); err == nil {
+		fmt.Println("apidiff.config.json already exists, skipping init")
+		return nil
+	}
+
 	config := Config{
 		Project:   projectName,
 		BaseURL:   "https://api.example.com",
