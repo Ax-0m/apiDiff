@@ -23,10 +23,18 @@ func main() {
 	switch command {
 	case "init":
 		if len(os.Args) < 3 {
-			fmt.Println("Usage: apidiff init <project-name>")
+			fmt.Println("Usage: apidiff init <project-name> [base-url] [endpoints...]")
 			os.Exit(1)
 		}
-		cmd.InitProject(os.Args[2])
+		baseURL := ""
+		endpoints := []string{}
+		if len(os.Args) >= 4 {
+			baseURL = os.Args[3]
+		}
+		if len(os.Args) >= 5 {
+			endpoints = os.Args[4:]
+		}
+		cmd.InitProject(os.Args[2], baseURL, endpoints)
 
 	case "snapshot":
 		if len(os.Args) < 3 {

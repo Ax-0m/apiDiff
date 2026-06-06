@@ -12,16 +12,23 @@ type Config struct {
 	Endpoints []string `json:"endpoints"`
 }
 
-func CreateConfig(projectName string) error {
+func CreateConfig(projectName, baseURL string, endpoints []string) error {
 	if _, err := os.Stat("apidiff.config.json"); err == nil {
 		fmt.Println("apidiff.config.json already exists, skipping init")
 		return nil
 	}
 
+	if baseURL == "" {
+		baseURL = "https://api.example.com"
+	}
+	if endpoints == nil {
+		endpoints = []string{}
+	}
+
 	config := Config{
 		Project:   projectName,
-		BaseURL:   "https://api.example.com",
-		Endpoints: []string{},
+		BaseURL:   baseURL,
+		Endpoints: endpoints,
 	}
 
 	data, err := json.MarshalIndent(config, "", " ")

@@ -5,8 +5,8 @@ import (
 	"github.com/Ax-0m/apiDiff/config"
 )
 
-func InitProject(projectName string) {
-	err := config.CreateConfig(projectName)
+func InitProject(projectName, baseURL string, endpoints []string) {
+	err := config.CreateConfig(projectName, baseURL, endpoints)
 	if err != nil {
 		fmt.Print("error:", err)
 		return
